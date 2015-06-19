@@ -1,0 +1,56 @@
+{% if user.is_authenticated %}
+<html>
+  <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
+  {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
+  <body>
+    <div class="wrapper"> <!-- for the footer-->
+	<center>
+		<div id="navcontainer">
+			<ul>
+				<li><a href="/accounts/profile/">HOME</a></li>
+				<li><a href="/projects">PROJECTS</a></li>
+				<li><a href="/new_project">NEW PROJECT</a></li>
+				<li><a href="/help">HELP</a></li>
+				<li><a href="/about">ABOUT</a></li>
+				<li><a href="/settings">SETTINGS</a></li>
+				<li><a href="/accounts/logout/?next=/">LOGOUT</a></li> <!-- Using ?next=/ will redirect to login after logout-->
+			</ul>
+		</div>
+	</center>
+
+   	<!-- List all projects of the logged in user -->
+	{% if Project_List %}
+		<ul>
+            <table>
+                <th>Project name</th>
+            {% for p in Project_List %}
+                <tr>
+                        <td align="left">{{ p.Project_Name }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+		</ul>
+	{% else %}
+		<p>
+            There were no projects found for user: {{ user.first_name }} {{ user.last_name }}.
+            </br> Click <a href="/new_project">here</a> or on the "NEW PROJECT menu if you want to create a new project.
+        </p>
+	{% endif %}
+
+
+  </body>
+</div>
+
+  		<div class="push"></div>
+        <div class="footer">
+            <p>Copyright (c) 2015</p>
+        </div>
+ </html>
+{% else %}
+{% endif %}
+
+
+
+
+

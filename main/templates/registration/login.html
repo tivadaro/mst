@@ -1,0 +1,21 @@
+{% load staticfiles %}
+<html>
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
+<head>
+  <title>Mass spectrometry tools</title>
+  <center><h2>Mass Spectropmetry Toolbox</h2></center>
+</head>
+<body>
+<div class="loginDiv">
+
+        <form id="login_form" method="post" action="" align="right">
+            {% csrf_token %}
+                  <input type="text" name="username" value="" id="username" placeholder="Username">
+                  <input type="password" name="password" value="" id="password" placeholder="Password">
+                  <input type="submit" value="Login">
+                  <input type="hidden" name="next.html" value="/">
+        </form>
+</div>
+</body>
+</html>
+

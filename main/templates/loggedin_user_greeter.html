@@ -1,0 +1,59 @@
+<html>
+{% if user.is_authenticated %}
+  <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
+  {% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
+  <body>
+    <div class="wrapper"> <!-- for the footer-->
+	<center>
+		<div id="navcontainer">
+			<ul>
+				<li><a href="/accounts/profile/">HOME</a></li>
+				<li><a href="/projects">PROJECTS</a></li>
+				<li><a href="/new_project">NEW PROJECT</a></li>
+				<li><a href="/help">HELP</a></li>
+				<li><a href="/about">ABOUT</a></li>
+				<li><a href="/settings">SETTINGS</a></li>
+				<li><a href="/accounts/logout/?next=/">LOGOUT</a></li> <!-- Using ?next=/ will redirect to login after logout-->
+			</ul>
+		</div>
+	</center>
+	<!-- Finished with the menu -->
+
+	<!-- List of uploaded documents -->
+	{% if documents %}
+		<ul>
+		<table>
+			<th>User ID</th>
+			<th>Type</th>
+			<th align="left">Name</th>
+			<th>Date</th>
+			<th>Action</th>
+		{% for document in documents %}
+			<tr>
+					<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
+					<td align="center">MS/MS</td>
+					<td align="left">{{ document.docfile.name }}</td>
+					<td align="center">{{ document.docfile.date }}</td>
+					<td align="center"><a href="{{ document.docfile.url }}">Load</a></td>
+
+			</tr>
+		{% endfor %}
+		</table>
+		</ul>
+	{% else %}
+		<p>No documents.</p>
+	{% endif %}
+	</center>
+	</body>
+{% else %}
+  <p>Welcome, new user. Please log in.</p>
+{% endif %}
+
+</div>
+
+  		<div class="push"></div>
+        <div class="footer">
+            <p>Copyright (c) 2015</p>
+        </div>
+</html>
