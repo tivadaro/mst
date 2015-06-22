@@ -19,17 +19,13 @@ from django.contrib.auth.views import login, logout
 from main import views
 
 
+
 urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
     url(r'^$', login),
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', logout),
     url(r'^accounts/profile/$', views.main_page_user),
-    url(r'^about/$',  views.about_mst),
-    url(r'^help/$',  views.help_mst),
-    url(r'^new_project/$',  views.new_project_mst),
-    url(r'^projects/$',  views.projects_mst),
-    url(r'^settings/$',  views.project_settings),
-    url(r'^new_project_name/$',  views.save_new_project_name), #<-up to here these urls are for the main app (they should be grouped accordingly?
+    url(r'', include('main.urls')),
     url(r'', include('blog.urls')),
 ]

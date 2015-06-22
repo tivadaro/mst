@@ -16,19 +16,19 @@ def project_settings(request):
             form = DocumentForm() # A empty, unbound form
             # Load documents for the list page
             s = Project_Settings.objects.filter(User_ID = request.user.pk) #Only send the list of the Project_setting list of the logged in user
-    return render(request,'settings.html',{'username': request.user.username, 'settings_html_var': s, 'form': form} )
+    return render(request,'main/settings.html',{'username': request.user.username, 'settings_html_var': s, 'form': form} )
 
 @login_required
 def about_mst(request):
    if request.user.is_authenticated():
-       return render(request,'about.html',{'username': request.user.username} )
+       return render(request,'main/about.html',{'username': request.user.username} )
 
 @login_required
 def new_project_mst(request):
    if request.user.is_authenticated():
        form = DocumentForm()
        Project_List=Projects.objects.filter(User_ID = request.user.pk) #Only send the project list of the logged in user
-       return render(request,'new_project.html',{'username': request.user.username, 'Project_List': Project_List, 'form': form} )
+       return render(request,'main/new_project.html',{'username': request.user.username, 'Project_List': Project_List, 'form': form} )
 
 @login_required
 def save_new_project_name(request):
@@ -50,7 +50,7 @@ def save_new_project_name(request):
         form = NameForm()
     #requery the newly updated database with all the projects
     Project_List=Projects.objects.filter(User_ID = request.user.pk)
-    return render(request,'projects.html',{'username': request.user.username, 'Project_List': Project_List, 'form': form} )
+    return render(request,'main/projects.html',{'username': request.user.username, 'Project_List': Project_List, 'form': form} )
 
 
 @login_required
@@ -58,13 +58,13 @@ def projects_mst(request):
    if request.user.is_authenticated():
        form = DocumentForm()
        Project_List=Projects.objects.filter(User_ID = request.user.pk) #Only send the project list of the logged in user
-       return render(request,'projects.html',{'username': request.user.username, 'Project_List': Project_List, 'form': form} )
+       return render(request,'main/projects.html',{'username': request.user.username, 'Project_List': Project_List, 'form': form} )
 
 
 @login_required
 def help_mst(request):
    if request.user.is_authenticated():
-       return render(request,'help.html',{'username': request.user.username} )
+       return render(request,'main/help.html',{'username': request.user.username} )
 
 @login_required
 def main_page_user(request):
@@ -81,7 +81,7 @@ def main_page_user(request):
             form = DocumentForm() # A empty, unbound form
             # Load documents for the list page
             documents = Document.objects.all()
-    return render(request,'loggedin_user_greeter.html',{'username': request.user.username, 'documents': documents, 'form': form} )
+    return render(request,'main/loggedin_user_greeter.html',{'username': request.user.username, 'documents': documents, 'form': form} )
 
 
 def login_view(request):
