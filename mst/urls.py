@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from main import views
 
+
 urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
     url(r'^$', login),
@@ -29,5 +30,6 @@ urlpatterns = [
     url(r'^new_project/$',  views.new_project_mst),
     url(r'^projects/$',  views.projects_mst),
     url(r'^settings/$',  views.project_settings),
-    url(r'^new_project_name/$',  views.save_new_project_name),
+    url(r'^new_project_name/$',  views.save_new_project_name), #<-up to here these urls are for the main app (they should be grouped accordingly?
+    url(r'', include('blog.urls')),
 ]
