@@ -1,7 +1,7 @@
 # mst
 Mass Spectrometry Toolbox (Python &amp; Django)
 Online tool to analyze mass spectrometry data (using mzXML input files).
-The software is written in Python and used Django fro the web framnework.
+The software is written in Python and uses Django as the web framnework.
 
 Capabilities:
 -approved users can create projects and settings
