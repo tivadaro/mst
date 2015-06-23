@@ -19,17 +19,13 @@
 		</div>
 	</center>
 
-<!--        <form id="new_project_name" method="POST" action="/new_project_name/" align="left"> <!-- We use the post method because we want to update a field in the project table-->
-<!--            {% csrf_token %}
-<!--                      <input type="text" name="new_project_name" id="new_project_name" placeholder="Project name" value="{{ new_project_name }}">
-                      <input type="submit" value="Save project">
-        </form>
--->
     <form method="POST" class="post-form">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
+        <!--{{ form.as_p }}-->
+        <input type="text" name="Project_Name" value="" id="Project_Name" placeholder="Project Name">
+        <input type="submit" value="Save">
     </form>
+
 
    	<!-- List all projects of the logged in user -->
 	{% if Project_List %}
@@ -58,8 +54,5 @@
  </html>
 {% else %}
 {% endif %}
-
-
-
 
 

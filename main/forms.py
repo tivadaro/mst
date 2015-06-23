@@ -1,4 +1,5 @@
 from django import forms
+from main.models import Projects
 
 class DocumentForm(forms.Form):
     docfile = forms.FileField(
@@ -6,5 +7,8 @@ class DocumentForm(forms.Form):
         help_text='max. 42 megabytes'
     )
 
-class NameForm(forms.Form):
-    new_project_name = forms.CharField(max_length=100)
+class NewProjectForm(forms.ModelForm):
+
+    class Meta:
+        model = Projects
+        fields = ('Project_Name',)
