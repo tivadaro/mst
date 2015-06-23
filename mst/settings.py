@@ -17,7 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 TEMPLATE_DIRS = (
     os.path.join(os.path.dirname(__file__), 'templates').replace('\\','/'),
-  '/home/tivi/mst/main/templates',
+
+
 )
 
  # List of callables that know how to import templates from various sources.
@@ -53,7 +54,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
-    'blog',
 )
 
 MIDDLEWARE_CLASSES = (

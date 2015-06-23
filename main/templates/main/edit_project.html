@@ -1,27 +1,9 @@
-{% if user.is_authenticated %}
-<html>
-  <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
-  {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
-  <body>
-    <div class="wrapper"> <!-- for the footer-->
-	<center>
-		<div id="navcontainer">
-			<ul>
-				<li><a href="/accounts/profile/">HOME</a></li>
-				<li><a href="/projects">PROJECTS</a></li>
-				<li><a href="/new_project">NEW PROJECT</a></li>
-				<li><a href="/help">HELP</a></li>
-				<li><a href="/about">ABOUT</a></li>
-				<li><a href="/settings">SETTINGS</a></li>
-				<li><a href="/accounts/logout/?next=/">LOGOUT</a></li> <!-- Using ?next=/ will redirect to login after logout-->
-			</ul>
-		</div>
-	</center>
+{% extends "main/base.html" %}
+
+{% block content %}
 
     <form method="POST" class="post-form">
         {% csrf_token %}
-        <!--{{ form.as_p }}-->
         <input type="text" name="Project_Name" value="" id="Project_Name" placeholder="Project Name">
         <input type="submit" value="Save">
     </form>
@@ -43,16 +25,4 @@
 		<p>No projects for user: {{ user.first_name }} {{ user.last_name }}. </br>You can create one by setting up the name in te textbox above and Save your entry.</p>
 	{% endif %}
 
-
-  </body>
-</div>
-
-  		<div class="push"></div>
-        <div class="footer">
-            <p>Copyright (c) 2015</p>
-        </div>
- </html>
-{% else %}
-{% endif %}
-
-
+{% endblock content %}

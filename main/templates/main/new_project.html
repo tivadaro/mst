@@ -1,30 +1,6 @@
-{% if user.is_authenticated %}
-<html>
-  <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
-  {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
-  <body>
-    <div class="wrapper"> <!-- for the footer-->
-	<center>
-		<div id="navcontainer">
-			<ul>
-				<li><a href="/accounts/profile/">HOME</a></li>
-				<li><a href="/projects">PROJECTS</a></li>
-				<li><a href="/new_project">NEW PROJECT</a></li>
-				<li><a href="/help">HELP</a></li>
-				<li><a href="/about">ABOUT</a></li>
-				<li><a href="/settings">SETTINGS</a></li>
-				<li><a href="/accounts/logout/?next=/">LOGOUT</a></li> <!-- Using ?next=/ will redirect to login after logout-->
-			</ul>
-		</div>
-	</center>
+{% extends "main/base.html" %}
 
-<!--        <form id="new_project_name" method="POST" action="/new_project_name/" align="left"> <!-- We use the post method because we want to update a field in the project table-->
-<!--            {% csrf_token %}
-<!--                      <input type="text" name="new_project_name" id="new_project_name" placeholder="Project name" value="{{ new_project_name }}">
-                      <input type="submit" value="Save project">
-        </form>
--->
+{% block content %}
     <form method="POST" class="post-form">
         {% csrf_token %}
         {{ form.as_p }}
@@ -46,20 +22,4 @@
 	{% else %}
 		<p>No projects for user: {{ user.first_name }} {{ user.last_name }}. </br>You can create one by setting up the name in te textbox above and Save your entry.</p>
 	{% endif %}
-
-
-  </body>
-</div>
-
-  		<div class="push"></div>
-        <div class="footer">
-            <p>Copyright (c) 2015</p>
-        </div>
- </html>
-{% else %}
-{% endif %}
-
-
-
-
-
+{% endblock content %}

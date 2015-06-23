@@ -27,5 +27,4 @@ urlpatterns = [
     url(r'^accounts/logout/$', logout),
     url(r'^accounts/profile/$', views.main_page_user),
     url(r'', include('main.urls')),
-    url(r'', include('blog.urls')),
 ]
