@@ -20,7 +20,7 @@ def project_settings(request):
         # Handle file upload
             form = DocumentForm() # A empty, unbound form
             # Load documents for the list page
-            s = Project_Settings.objects.filter(User_ID = request.user.pk) #Only send the list of the Project_setting list of the logged in user
+            s = Project_Settings.objects.filter(User_ID = request.user.pk).order_by('-pk') #Only send the list of the Project_setting list of the logged in user
     return render(request,'main/settings.html',{'username': request.user.username, 'settings_html_var': s, 'form': form} )
 
 @login_required
@@ -32,7 +32,7 @@ def about_mst(request):
 def new_project_mst(request):
    if request.user.is_authenticated():
        form = DocumentForm()
-       Project_List=Projects.objects.filter(User_ID = request.user.pk) #Only send the project list of the logged in user
+       Project_List=Projects.objects.filter(User_ID = request.user.pk).order_by('-pk') #Only send the project list of the logged in user
        return render(request,'main/new_project.html',{'username': request.user.username, 'Project_List': Project_List, 'form': form} )
 
 @login_required
@@ -48,18 +48,18 @@ def new_project_name(request):
         else:
             form = NewProjectForm()
 
-        Project_List=Projects.objects.filter(User_ID = request.user.pk) #Only send the project list of the logged in user
+        Project_List=Projects.objects.filter(User_ID = request.user.pk).order_by('-pk') #Only send the project list of the logged in user and sort for - primary key (latest =first)
         return render(request, 'main/edit_project.html', {'username': request.user.username, 'Project_List': Project_List, 'form': form})
 
 
 @login_required
 def projects_mst(request):
    if request.user.is_authenticated():
-       Project_List=Projects.objects.filter(User_ID = request.user.pk)
+       Project_List=Projects.objects.filter(User_ID = request.user.pk).order_by('-pk') #Filter for logged in user and order so latest is first (using the reverse order of the primary key: '-pk')
        #Project_List=Projects.objects.filter(User_ID = request.user.pk).filter(Setting_ID__gt = 0)
        #Only send the project list of the logged in user and have setting assigned
        #(i.e., Setting_ID>0. For this yoiu must use Setting_ID__gt=0? weird!
-       paginator = Paginator(Project_List, 5)
+       paginator = Paginator(Project_List, 10)
        # Show 5 projects per page. Maybe offer an account settings where this chan be changed?
        page = request.GET.get('page')
        try:
