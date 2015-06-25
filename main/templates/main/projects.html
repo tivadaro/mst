@@ -6,9 +6,11 @@
 		<ul>
             <table>
                 <th>Project name</th>
+                <th>Project ID</th>
             {% for p in Project_List %}
                 <tr>
                         <td align="left">{{ p.Project_Name }}</td>
+                        <td align="left">{{ p.pk }}</td>
                 </tr>
             {% endfor %}
             </table>
@@ -19,4 +21,23 @@
             </br> Click <a href="/new_project">here</a> or on the "NEW PROJECT menu if you want to create a new project.
         </p>
 	{% endif %}
+	<!--Pagination-->
+	<center>
+    	<div class="pagination">
+            <span class="step-links">
+                {% if Project_List.has_previous %}
+                    <a href="?page={{ Project_List.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ Project_List.number }} of {{ Project_List.paginator.num_pages }}.
+                </span>
+
+                {% if Project_List.has_next %}
+                    <a href="?page={{ Project_List.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    <center>
 {% endblock content %}
+

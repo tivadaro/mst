@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^$', login),
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', logout),
-    url(r'^accounts/profile/$', views.main_page_user),
+    #url(r'^accounts/profile/$', views.main_page_user),
+    url(r'^accounts/profile/$', views.projects_mst),
     url(r'', include('main.urls')),
 ]

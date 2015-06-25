@@ -1,9 +1,9 @@
 {% if user.is_authenticated %}
 <html>
-  <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
-  {% load staticfiles %}
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
+  {% load staticfiles %}
   <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
   <body>
   <div class="wrapper"> <!-- for the footer-->
@@ -11,7 +11,7 @@
 	<center>
 		<div id="navcontainer">
 			<ul>
-				<li><a href="/accounts/profile/">HOME</a></li>
+				<!--<li><a href="/accounts/profile/">HOME</a></li>-->
 				<li><a href="/projects">PROJECTS</a></li>
 				<li><a href="/new_project">NEW PROJECT</a></li>
 				<li><a href="/help">HELP</a></li>
