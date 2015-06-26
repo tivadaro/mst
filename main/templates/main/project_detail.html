@@ -1,0 +1,33 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+   	<!-- List all projects of the logged in user -->
+	{% if Project_List %}
+		<ul>
+            <table>
+                <th>Project name</th>
+                <th>project Setting ID</th>
+                <th>Project Test ID</th>
+                <th>Action</th>
+            {% for p in Project_List %}
+                <tr>
+                        <td align="left">{{ p.Project_Name }}</td>
+                        <td align="left">{{ p.Seting_ID }}</td>
+                        <td align="left">{{ p.Test_ID }}</td>
+                        <td align="left"><a href="/project_delete/{{ p.pk }}">Delete</a></td>
+
+                </tr>
+
+            {% endfor %}
+            </table>
+		</ul>
+
+	{% else %}
+		<p>
+            There were no projects found for user: {{ user.first_name }} {{ user.last_name }}.
+            </br> Click <a href="/new_project">here</a> or on the "NEW PROJECT menu if you want to create a new project.
+        </p>
+	{% endif %}
+
+{% endblock content %}
+

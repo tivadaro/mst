@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, render_to_response
+from django.shortcuts import render, redirect, render_to_response, get_object_or_404
 from django.core.urlresolvers import reverse
 from django.template import Context
 from django.http import HttpResponse,Http404,HttpResponseRedirect
@@ -6,13 +6,11 @@ import datetime
 from django.template import RequestContext
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from main.forms import DocumentForm, NewProjectForm
+from main.forms import DocumentForm, NewProjectForm, DeleteNewForm
 from main.models import Document, Projects, Project_Settings
-
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
-
 
 @login_required
 def project_settings(request):
@@ -27,6 +25,12 @@ def project_settings(request):
 def about_mst(request):
    if request.user.is_authenticated():
        return render(request,'main/about.html',{'username': request.user.username} )
+
+@login_required
+def terms_of_use_mst(request):
+   if request.user.is_authenticated():
+       return render(request,'main/terms_of_use.html',{'username': request.user.username} )
+
 
 @login_required
 def new_project_mst(request):
@@ -47,7 +51,6 @@ def new_project_name(request):
                 return redirect('main.views.projects_mst')
         else:
             form = NewProjectForm()
-
         Project_List=Projects.objects.filter(User_ID = request.user.pk).order_by('-pk') #Only send the project list of the logged in user and sort for - primary key (latest =first)
         return render(request, 'main/edit_project.html', {'username': request.user.username, 'Project_List': Project_List, 'form': form})
 
@@ -71,6 +74,18 @@ def projects_mst(request):
         # If page is out of range (e.g. 9999), deliver last page of results.
             Numbered_Project_List = paginator.page(paginator.num_pages)
        return render(request,'main/projects.html',{'username': request.user.username, 'Project_List': Numbered_Project_List})
+
+@login_required
+def project_detail(request, Project_ID):
+   if request.user.is_authenticated():
+       Project_List=Projects.objects.filter(User_ID = request.user.pk).filter(pk = Project_ID) #get the project ID of the user and from the /project/id request
+       return render(request,'main/project_detail.html',{'username': request.user.username, 'Project_List': Project_List} )
+
+@login_required
+def project_delete(request, Project_ID):
+   if request.user.is_authenticated():
+       Project_List=Projects.objects.filter(User_ID = request.user.pk).filter(pk = Project_ID).delete() #get and delete the project ID of the user and from the /project/id request
+       return redirect('main.views.projects_mst')
 
 
 @login_required
@@ -104,6 +119,7 @@ def login_view(request):
         # Correct password, and the user is marked "active"
         auth.login(request, user)
         # Redirect to a success page.
+        # Check if user has designated folder under /media/documents/ -NOT done yet
         return HttpResponseRedirect("/account/loggedin/")
     else:
         # Show an error page

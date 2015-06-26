@@ -12,3 +12,11 @@ class NewProjectForm(forms.ModelForm):
     class Meta:
         model = Projects
         fields = ('Project_Name',)
+
+
+class DeleteNewForm(forms.ModelForm):
+
+    class Meta:
+        model = Projects
+        fields = []
+
