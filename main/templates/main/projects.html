@@ -9,7 +9,7 @@
                 <th>Project ID</th>
             {% for p in Project_List %}
                 <tr>
-                        <td align="left"><a href="/project/{{ p.pk }}">{{ p.Project_Name }}</a></td>
+                        <td align="left"><a href="/project/{{ p.pk }}" title="Click for more details about this project">{{ p.Project_Name }}</a></td>
                         <td align="left">{{ p.pk }}</td>
                 </tr>
             {% endfor %}

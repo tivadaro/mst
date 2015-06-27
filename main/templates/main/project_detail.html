@@ -6,22 +6,29 @@
 		<ul>
             <table>
                 <th>Project name</th>
-                <th>project Setting ID</th>
+                <th>Project Setting ID</th>
                 <th>Project Test ID</th>
                 <th>Action</th>
             {% for p in Project_List %}
                 <tr>
                         <td align="left">{{ p.Project_Name }}</td>
-                        <td align="left">{{ p.Seting_ID }}</td>
-                        <td align="left">{{ p.Test_ID }}</td>
+                        {% if Setting_ID %} <!--if Setting_ID is 0 or NULL add link to add new setting to the project -->
+                            <td align="left">{{ p.Setting_ID }}</td>
+                        {% else %}
+                            <td align="left"><a href='/settings'>Add setting</a></td>
+                        {% endif %}
+                        {% if Test_ID %}<!--if Test_ID is 0 or NULL add link to add new test to the project -->
+                            <td align="left">{{ p.Test_ID }}</td>
+                        {% else %}
+                            <td align="left"><a href='/test'>Add Test</a></td>
+                        {% endif %}
                         <td align="left"><a href="/project_delete/{{ p.pk }}">Delete</a></td>
 
                 </tr>
-
             {% endfor %}
             </table>
 		</ul>
-
+<h1>Add working "New settings" and "New Tests". The new test feature has to have the uploaded mzXML file working"</h1>
 	{% else %}
 		<p>
             There were no projects found for user: {{ user.first_name }} {{ user.last_name }}.
