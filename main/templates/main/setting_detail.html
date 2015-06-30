@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+   	<!-- List all projects of the logged in user -->
+	{% if Settings_List %}
+		<ul>
+            <table>
+                <th>Setting name</th>
+                <th>Add dilution series files</th>
+                <th>Action</th>
+            {% for s in Settings_List %}
+                <tr>
+                        <td align="left">{{ s.Settings_Name }}</td>
+                        <!--Do some loading and load the file names/standard curve link based on Setting ID-->
+                        {% if Setting_ID %} <!--if Setting_ID is 0 or NULL add link to add new setting to the project -->
+                            <td align="left">{{ p.Setting_ID }}</td>
+                        {% else %}
+                            <td align="left"><a href='/settings'>Add setting</a></td>
+                        {% endif %}
+                        <td align="left"><a href="/setting_delete/{{ s.pk }}">Delete setting</a></td>
+
+                </tr>
+            {% endfor %}
+            </table>
+		</ul>
+<h2>Add working "New setting files" and "New Tests". The new test and new setting file feature has to have the uploaded mzXML file working"</h1>
+	{% else %}
+		<p>
+            There were no projects found for user: {{ user.first_name }} {{ user.last_name }}.
+            </br> Click <a href="/new_project">here</a> or on the "NEW PROJECT menu if you want to create a new project.
+        </p>
+	{% endif %}
+
+{% endblock content %}
+

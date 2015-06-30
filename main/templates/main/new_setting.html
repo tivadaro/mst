@@ -8,18 +8,18 @@
     </form>
 
    	<!-- List all projects of the logged in user -->
-	{% if Project_List %}
+	{% if Settings_List %}
 		<ul>
             <table>
-                <th>Project name</th>
-            {% for p in Project_List %}
+                <th>Setting name</th>
+            {% for s in Settings_List %}
                 <tr>
-                        <td align="left">{{ p.Project_Name }}</td>
+                        <td align="left">{{ s.Settings_Name }}</td>
                 </tr>
             {% endfor %}
             </table>
 		</ul>
 	{% else %}
-		<p>No projects for user: {{ user.first_name }} {{ user.last_name }}. </br>You can create a new project by choosing a name in the textbox above and Save your entry.</p>
+		<p>No settings found for user: {{ user.first_name }} {{ user.last_name }}. </br>You can create a new setting by choosing a name in the textbox above and Save your entry.</p>
 	{% endif %}
 {% endblock content %}

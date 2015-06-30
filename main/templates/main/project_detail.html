@@ -8,20 +8,22 @@
                 <th>Project name</th>
                 <th>Project Setting ID</th>
                 <th>Project Test ID</th>
+                <th>Project Results</th>
                 <th>Action</th>
             {% for p in Project_List %}
                 <tr>
                         <td align="left">{{ p.Project_Name }}</td>
-                        {% if Setting_ID %} <!--if Setting_ID is 0 or NULL add link to add new setting to the project -->
+                        {% if p.Setting_ID %} <!--if Setting_ID is 0 or NULL add link to add new setting to the project -->
                             <td align="left">{{ p.Setting_ID }}</td>
                         {% else %}
                             <td align="left"><a href='/settings'>Add setting</a></td>
                         {% endif %}
-                        {% if Test_ID %}<!--if Test_ID is 0 or NULL add link to add new test to the project -->
+                        {% if p.Test_ID %}<!--if Test_ID is 0 or NULL add link to add new test to the project -->
                             <td align="left">{{ p.Test_ID }}</td>
                         {% else %}
                             <td align="left"><a href='/test'>Add Test</a></td>
                         {% endif %}
+                        <td align="left">Results will go here</td>
                         <td align="left"><a href="/project_delete/{{ p.pk }}">Delete</a></td>
 
                 </tr>

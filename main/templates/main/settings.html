@@ -2,18 +2,15 @@
 
 {% block content %}
 	<!-- Eventually this will have to be crossed so it only shows User specific settings -->
-	{% if settings_html_var %}
+	{% if Settings_List %}
 		<ul>
 		<table>
-			<th>User ID</th>
-			<th>Type</th>
 			<th align="left">Setting Name</th>
 			<th>Details</th>
-		{% for s in settings_html_var %}
+		{% for s in Settings_List %}
 			<tr>
-					<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
-					<td align="center">MS/MS</td>
-					<td align="left">{{ s.Settings_Name }}</td>
+					<!--<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
+					<td align="left"><a href="/setting/{{ s.pk }}" title="Click for more details about this setting">{{ s.Settings_Name }}</a></td>
 					<td align="left">Details</td> <!-- The details would be links filtered based on setting ID -->
 			</tr>
 		{% endfor %}
@@ -22,4 +19,23 @@
 	{% else %}
 		<p>You have no settings set up yet.</p>
 	{% endif %}
+
+		<!--Pagination-->
+	<center>
+    	<div class="pagination">
+            <span class="step-links">
+                {% if Settings_List.has_previous %}
+                    <a href="?page={{ Settings_List.previous_page_number }}">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ Settings_List.number }} of {{ Settings_List.paginator.num_pages }}.
+                </span>
+
+                {% if Settings_List.has_next %}
+                    <a href="?page={{ Settings_List.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+    <center>
 {% endblock content %}

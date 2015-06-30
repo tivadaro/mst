@@ -60,6 +60,27 @@ body {
   left: +20px;
 }
 
+
+/*footer setup*/
+
+html, body{
+height: 85%;
+}
+
+.wrapper {
+min-height: 100%;
+height: auto !important;
+height: 100%;
+margin: 0 auto -4em;
+}
+.footer, .push {
+height: 4em;
+text-align: center;
+}
+
+
+/* Menu defs */
+
 #navcontainer ul
 {
     margin: 0;
@@ -86,21 +107,4 @@ body {
 {
      color: #FA8258;
     /*background-color: #DCDCDC;*/
-}
-
-/*footer setup*/
-
-html, body{
-height: 85%;
-}
-
-.wrapper {
-min-height: 100%;
-height: auto !important;
-height: 100%;
-margin: 0 auto -4em;
-}
-.footer, .push {
-height: 4em;
-text-align: center;
 }

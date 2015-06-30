@@ -1,0 +1,28 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        <input type="text" name="Settings_Name" value="" id="Settings_Name" placeholder="Setting Name">
+        <input type="submit" value="Save">
+    </form>
+
+
+   	<!-- List all projects of the logged in user -->
+	{% if Settings_List %}
+		<ul>
+            <table>
+                <th>Setting name</th>
+            {% for s in Settings_List %}
+                <tr>
+                        <td align="left">{{ s.Settings_Name }}</td>
+                </tr>
+            {% endfor %}
+            </table>
+		</ul>
+	{% else %}
+		<p>No projects for user: {{ user.first_name }} {{ user.last_name }}. </br>You can create one by setting up the name in te textbox above and Save your entry.</p>
+	{% endif %}
+
+{% endblock content %}
