@@ -33,9 +33,9 @@ class Setting_File(models.Model):
 
 class Projects(models.Model):
     Project_Name=models.CharField(max_length=100)
-    Setting_ID=models.IntegerField(default=0)
+    Setting_ID=models.ForeignKey(Project_Settings, null=True, blank=True,on_delete=models.SET_NULL)
     User_ID=models.IntegerField(default=0)
-    Test_ID=models.IntegerField(default=0)
+    Test_ID=models.ForeignKey(Test_File, null=True, blank=True,on_delete=models.SET_NULL)
 
 #mzXML specific MS, MS/MS classes
 class MSScan():

@@ -18,12 +18,10 @@
                             <td align="left"><a href='/settings'>Add setting</a></td>
                         {% endif %}
                         <td align="left"><a href="/setting_delete/{{ s.pk }}">Delete setting</a></td>
-
                 </tr>
             {% endfor %}
             </table>
 		</ul>
-<h2>Add working "New setting files" and "New Tests". The new test and new setting file feature has to have the uploaded mzXML file working"</h1>
 	{% else %}
 		<p>
             There were no projects found for user: {{ user.first_name }} {{ user.last_name }}.

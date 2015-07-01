@@ -17,15 +17,11 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.views import login, logout
 from main import views
-
-
-
 urlpatterns = [
     url(r'^admin', include(admin.site.urls)),
     url(r'^$', login),
     url(r'^accounts/login/$',  login),
     url(r'^accounts/logout/$', logout),
-    #url(r'^accounts/profile/$', views.main_page_user),
     url(r'^accounts/profile/$', views.projects_mst),
     url(r'', include('main.urls')),
 ]

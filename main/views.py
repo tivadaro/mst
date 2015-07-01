@@ -102,14 +102,24 @@ def projects_mst(request):
             Numbered_Project_List = paginator.page(paginator.num_pages)
        return render(request,'main/projects.html',{'username': request.user.username, 'Project_List': Numbered_Project_List})
 
+
 @login_required
 def project_detail(request, Project_ID):
    if request.user.is_authenticated():
        Project_List=Projects.objects.filter(User_ID = request.user.pk).filter(pk = Project_ID) #get the project ID of the user and from the /project/id request
-       if Project_List.Setting_ID ==0:
-           return render(request,'main/project_detail.html',{'username': request.user.username, 'Project_List': Project_List} )
-        else
-           return render(request,'main/project_detail.html',{'username': request.user.username, 'Project_List': Project_List} )
+       return render(request,'main/project_detail.html',{'username': request.user.username, 'Project_List': Project_List} )
+
+
+
+
+
+
+
+
+
+
+
+
 
 @login_required
 def setting_detail(request, Setting_ID):

@@ -5,32 +5,41 @@
 	{% if Project_List %}
 		<ul>
             <table>
-                <th>Project name</th>
-                <th>Project Setting ID</th>
-                <th>Project Test ID</th>
-                <th>Project Results</th>
-                <th>Action</th>
+                <th>Description</th>
+                <th>Project details</th>
             {% for p in Project_List %}
                 <tr>
+                        <td align="left">Name</td>
                         <td align="left">{{ p.Project_Name }}</td>
-                        {% if p.Setting_ID %} <!--if Setting_ID is 0 or NULL add link to add new setting to the project -->
-                            <td align="left">{{ p.Setting_ID }}</td>
+                <tr>
+                <tr>
+                        <td align="left">Setting</td>
+                        {% if p.Setting_ID.pk %} <!--if p.Setting_ID.pk  is 0 or NULL add link to add new setting to the project -->
+                            <!-- Access the Settings_Name field from the Project_Settings model (table) through the Foreinkey (Setting_ID) element-->
+                            <td align="left"><a href="/setting/{{ p.Setting_ID.pk }}" title="Click for more details about this setting">{{ p.Setting_ID.Settings_Name }}</a></td>
                         {% else %}
-                            <td align="left"><a href='/settings'>Add setting</a></td>
+                            <td align="left">No setting found! <a href='/settings' title="Click to add a setting to this project">Add setting</a></td>
                         {% endif %}
-                        {% if p.Test_ID %}<!--if Test_ID is 0 or NULL add link to add new test to the project -->
+                </tr>
+                <tr>
+                        <td align="left">Test</td>
+                        {% if p.Test_ID.pk %}<!--if Test_ID is 0 or NULL add link to add new test to the project -->
                             <td align="left">{{ p.Test_ID }}</td>
                         {% else %}
-                            <td align="left"><a href='/test'>Add Test</a></td>
+                            <td align="left">No test found! <a href='/test' title="Click to add a test to this project">Add Test</a></td>
                         {% endif %}
-                        <td align="left">Results will go here</td>
-                        <td align="left"><a href="/project_delete/{{ p.pk }}">Delete</a></td>
-
+                </tr>
+                <tr>
+                        <td align="left">Results</td>
+                        <td align="left">Results link will go here</td>
+                </tr>
+                <tr>
+                        <td align="left">Action</td>
+                        <td align="left"><a href="/project_delete/{{ p.pk }}" title="Click to delete the project.">Delete project</a></td>
                 </tr>
             {% endfor %}
             </table>
 		</ul>
-<h1>Add working "New settings" and "New Tests". The new test feature has to have the uploaded mzXML file working"</h1>
 	{% else %}
 		<p>
             There were no projects found for user: {{ user.first_name }} {{ user.last_name }}.
@@ -39,4 +48,3 @@
 	{% endif %}
 
 {% endblock content %}
-
