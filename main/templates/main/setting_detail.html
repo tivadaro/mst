@@ -4,9 +4,9 @@
    	<!-- List all projects of the logged in user -->
 	{% if Settings_List %}
 		<ul>
-            <table>
+            <table id='custom'>
                 <th>Setting name</th>
-                <th>Add dilution series files</th>
+                <th>Dilution series files</th>
                 <th>Action</th>
             {% for s in Settings_List %}
                 <tr>
@@ -15,19 +15,47 @@
                         {% if Setting_ID %} <!--if Setting_ID is 0 or NULL add link to add new setting to the project -->
                             <td align="left">{{ p.Setting_ID }}</td>
                         {% else %}
-                            <td align="left"><a href='/settings'>Add setting</a></td>
+                            <td><a href='/upload_setting_files/{{ s.pk }}'>Upload files</a></td>
                         {% endif %}
-                        <td align="left"><a href="/setting_delete/{{ s.pk }}">Delete setting</a></td>
+                        <td><a href="/setting_delete/{{ s.pk }}">Delete setting</a></td>
                 </tr>
             {% endfor %}
             </table>
 		</ul>
+
+	<!--Load all documents assoaciated with this setting ID-->
+	    {% if documents %}
+    		<ul>
+    		<h4><center>Uploaded setting files</center></h4>
+    		<table id="custom">
+    			<!-- <th>User ID</th> -->
+    			<!-- <th>Type</th> -->
+    			<th align="left">Uploaded setting files</th>
+    			<th align="center">Action</th>
+    		{% for document in documents %}
+    			<tr>
+    					<!--<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
+    					<!--<td align="center">{{ document.Setting_ID.pk }}</td> -->
+    					<td align="left">{{ document.docfile }}</td>
+    					<!--<td align="center">{{ document.docfile.date }}</td> -->
+    					<td><a href="{{ document.docfile.url }}">Load</a></td>
+    			</tr>
+    		{% endfor %}
+    		</table>
+    		</ul>
+    	{% else %}
+    		<p>No setting files found!</p>
+    	{% endif %}
+
+
+
 	{% else %}
 		<p>
             There were no projects found for user: {{ user.first_name }} {{ user.last_name }}.
             </br> Click <a href="/new_project">here</a> or on the "NEW PROJECT menu if you want to create a new project.
         </p>
-	{% endif %}
+
+    {% endif %}
 
 {% endblock content %}
 

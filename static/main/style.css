@@ -16,7 +16,7 @@ margin-top: -250px; /*half height*/
 box-shadow:0 0 10px #9ecaed;
 }
 
-input {
+input:not([type=file]){
     width:150px;
     border:1px solid #8aafbb;
     border-radius:7px;
@@ -24,11 +24,17 @@ input {
     padding:5px;
     margin-top-right:-10px;
 }
-input:focus {
+
+input:not([type=file]):focus {
     outline:none;
     border-color:#9ecaed;
     box-shadow:0 0 10px #9ecaed;
 }
+
+#custom {
+    width: 60%;
+}
+
 
 table {
   border-collapse: collapse;
@@ -44,18 +50,18 @@ th, td {
 }
 
 
-tbody tr:nth-child(even) {background-color: #F0F8FF}
-tbody tr:nth-child(odd) {background-color: #fff}
+tbody, tr:nth-child(even) {background-color: #F0F8FF}
+tbody, tr:nth-child(odd) {background-color: #fff}
 
 tbody tr:hover {
   background-color: #DCDCDC
 }
 
-thead th: {background-color: #F0F8FF}
+thead, th: {background-color: #F0F8FF}
 
 body {
   font-family: 'Roboto','Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  padding: 50px 50px 150px;
+  padding: 50px 0px 150px;
   font-size: 16px;
   left: +20px;
 }

@@ -6,10 +6,6 @@ import base64
 import struct
 import xml.parsers.expat
 
-class Document(models.Model):
-    docfile=models.FileField(upload_to='documents/%Y/%m/%d')
-    #def folder_of_loggedin_user_exists: Chek if the loggedin user has a folder in the main documents folder
-    #    return True
 #Organization: Users, Projects, Settings, Files, Permissions classes etc.
 class Project_Settings(models.Model): #The Project_ID is generated automatically and can be reffered as models.ForeignKey(TableName)
     Settings_Name=models.CharField(max_length=100)
@@ -36,6 +32,19 @@ class Projects(models.Model):
     Setting_ID=models.ForeignKey(Project_Settings, null=True, blank=True,on_delete=models.SET_NULL)
     User_ID=models.IntegerField(default=0)
     Test_ID=models.ForeignKey(Test_File, null=True, blank=True,on_delete=models.SET_NULL)
+    def __str__(self):              # __unicode__ on Python 2
+        return self.Project_Name
+
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    #return 'user_{0}/{1}'.format(instance.user.id, filename)
+    return '/'.join(['documents', str(instance.Setting_ID.pk), filename])
+
+class Document(models.Model):
+    docfile=models.FileField(upload_to=user_directory_path)
+    Setting_ID=models.ForeignKey(Project_Settings, null=True, blank=True,on_delete=models.SET_NULL)
+    #def folder_of_loggedin_user_exists: Chek if the loggedin user has a folder in the main documents folder
+    #    return True
 
 #mzXML specific MS, MS/MS classes
 class MSScan():
