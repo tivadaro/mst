@@ -20,7 +20,7 @@ input:not([type=file]){
     width:150px;
     border:1px solid #8aafbb;
     border-radius:7px;
-    font-size:16px;
+    font-size:19px;
     padding:5px;
     margin-top-right:-10px;
 }
@@ -60,9 +60,9 @@ tbody tr:hover {
 thead, th: {background-color: #F0F8FF}
 
 body {
-  font-family: 'Roboto','Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans','Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   padding: 50px 0px 150px;
-  font-size: 16px;
+  font-size: 19px;
   left: +20px;
 }
 
@@ -111,6 +111,28 @@ text-align: center;
 
 #navcontainer ul li a:hover
 {
-     color: #FA8258;
-    /*background-color: #DCDCDC;*/
+    color: #FA8258;
+    background-color: #DCDCDC;
+}
+
+
+form span {
+    vertical-align: middle;
+    display: block;
+    width: 100%;
+}
+form label {
+    display: inline-block;
+    float: none;
+    width: 150px;
+    padding: 0;
+    margin: 5px 0 0;
+    text-align: left;
+}
+form input {
+    display: inline-block;
+    float: none;
+    width:auto;
+    margin:5px 0 0 10px;
+    padding:5px 5px;
 }

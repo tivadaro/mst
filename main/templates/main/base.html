@@ -1,7 +1,9 @@
 {% if user.is_authenticated %}
+
 <html>
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
   <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
   {% load staticfiles %}
   <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
@@ -20,7 +22,7 @@
  			<li><a href="/accounts/logout/?next=/">LOGOUT</a></li> <!-- Using ?next=/ will redirect to login after logout-->
 			</ul>
 		</div>
-
+<br/>
 {% block content %}
 {% endblock %}
   </div>
