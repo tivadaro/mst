@@ -18,7 +18,7 @@
                             <!-- Access the Settings_Name field from the Project_Settings model (table) through the Foreinkey (Setting_ID) element-->
                             <td align="left"><a href="/setting/{{ p.Setting_ID.pk }}" title="Click for more details about this setting">{{ p.Setting_ID.Settings_Name }}</a></td>
                         {% else %}
-                            <td align="left">No setting found! <a href='/settings' title="Click to add a setting to this project">Add setting</a></td>
+                            <td align="left">No setting found! <a href='/project/{{ p.pk }}/link_project_to_setting' title="Click to add a setting to this project">Add setting</a></td>
                         {% endif %}
                 </tr>
                 <tr>

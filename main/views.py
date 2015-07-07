@@ -109,7 +109,42 @@ def project_detail(request, Project_ID):
        Project_List=Projects.objects.filter(User_ID = request.user.pk).filter(pk = Project_ID) #get the project ID of the user and from the /project/id request
        return render(request,'main/project_detail.html',{'username': request.user.username, 'Project_List': Project_List} )
 
+@login_required
+def link_project_to_setting (request, Project_ID):
+   if request.user.is_authenticated():
+       Project_List=Projects.objects.filter(User_ID = request.user.pk).filter(pk = Project_ID) #get the project ID of the user and from the /project/id request
+       #return render(request,'main/project_detail.html',{'username': request.user.username, 'Project_List': Project_List} )
+       Settings_List=Project_Settings.objects.filter(User_ID = request.user.pk).order_by('-pk') #Filter for logged in user and order so latest is first (using the reverse order of the primary key: '-pk')
+       #Project_List=Projects.objects.filter(User_ID = request.user.pk).filter(Setting_ID__gt = 0)
+       #Only send the project list of the logged in user and have setting assigned
+       #(i.e., Setting_ID>0. For this yoiu must use Setting_ID__gt=0? weird!
+       paginator = Paginator(Settings_List, 10)
+       # Show 5 projects per page. Maybe offer an account settings where this chan be changed?
+       page = request.GET.get('page')
+       try:
+            Numbered_Settings_List = paginator.page(page)
+       except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            Numbered_Settings_List = paginator.page(1)
+       except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            Numbered_Settings_List = paginator.page(paginator.num_pages)
+       return render(request,'main/link_project_to_setting.html',{'username': request.user.username, 'Settings_List': Numbered_Settings_List, 'Project_List': Project_List})
 
+@login_required
+def link_project_to_setting_save (request, Project_ID, Setting_ID):
+   if request.user.is_authenticated():
+       Project_List=Projects.objects.filter(pk = Project_ID).filter(User_ID = request.user.pk) #get the project ID of the user and from the /project/id request
+       Setting = Project_Settings(pk = Setting_ID)
+       #Attach it to the update_curent_project_with_new_setting_ID object by setting the Projects.Setting_ID to Setting (the instance)
+       #update_curent_project_with_new_setting_ID = Projects(Setting_ID = Setting)
+       #update_curent_project_with_new_setting_ID = Projects(pk = Project_ID)
+       for update_curent_project_with_new_setting_ID in Project_List:
+           update_curent_project_with_new_setting_ID.Setting_ID = Setting
+           update_curent_project_with_new_setting_ID.save()
+       #Requerry the newly saved Project List
+       Project_List=Projects.objects.filter(pk = Project_ID).filter(User_ID = request.user.pk)
+       return render(request,'main/project_detail.html',{'username': request.user.username, 'Project_List': Project_List} )
 
 @login_required
 def setting_detail(request, Setting_ID):
@@ -117,8 +152,6 @@ def setting_detail(request, Setting_ID):
        Settings_List=Project_Settings.objects.filter(User_ID = request.user.pk).filter(pk = Setting_ID) #get the project ID of the user and from the /project/id request
        documents = Document.objects.filter(Setting_ID=Setting_ID)
        return render(request,'main/setting_detail.html',{'username': request.user.username, 'Settings_List': Settings_List, 'documents': documents} )
-
-
 
 @login_required
 def project_delete(request, Project_ID):
