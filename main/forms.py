@@ -15,7 +15,7 @@ class NewProjectForm(forms.ModelForm):
 class NewSettingForm(forms.ModelForm):
     class Meta:
         model = Project_Settings
-        fields = ('Settings_Name',)
+        fields = ('Settings_Name','Mass_Over_Charge',)
 
 
 class DeleteNewForm(forms.ModelForm):

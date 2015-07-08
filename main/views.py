@@ -40,6 +40,7 @@ def new_setting_name(request):
             if form.is_valid():
                 post = form.save(commit=False)
                 post.User_ID = request.user.pk
+                post.Mass_Over_Charge=form.cleaned_data['Mass_Over_Charge']
                 post.save()
                 return redirect('main.views.project_settings')
         else:

@@ -6,12 +6,12 @@
 		<ul>
 		<table id='custom'>
 			<th align="left">Setting Name</th>
-			<th>Details</th>
+			<th>m/z</th>
 		{% for s in Settings_List %}
 			<tr>
 					<!--<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
 					<td align="left"><a href="/setting/{{ s.pk }}" title="Click for more details about this setting">{{ s.Settings_Name }}</a></td>
-					<td align="left">Details</td> <!-- The details would be links filtered based on setting ID -->
+					<td align="left">{{ s.Mass_Over_Charge }}</td> <!-- The details would be links filtered based on setting ID -->
 			</tr>
 		{% endfor %}
 		</table>

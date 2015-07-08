@@ -1,5 +1,7 @@
 {% extends "main/base.html" %}
-
 {% block content %}
-  <center>This will be the place to add Help about program usage and flowchart maybe)</center>
+  <center>
+       {% load staticfiles %}
+       <img src="{% static 'main/images/flowchart.png' %}" style="width:50%"">
+  </center>
 {% endblock content %}

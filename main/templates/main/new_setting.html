@@ -12,9 +12,11 @@
 		<ul>
             <table>
                 <th>Setting name</th>
+                <th>m/z</th>
             {% for s in Settings_List %}
                 <tr>
                         <td align="left">{{ s.Settings_Name }}</td>
+                        <td align="left">{{ s.Mass_Over_Charge }}</td>
                 </tr>
             {% endfor %}
             </table>
