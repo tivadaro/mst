@@ -174,22 +174,23 @@ def upload_setting_files(request, Setting_ID):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
+            newdoc = form.save(commit=False) #do not save the from
             # Setting ID of Document is the foreign key for Project_Settings
             #Get and instance of the Project_Setting thet we get from the second param of the view
             Setting = Project_Settings(pk = Setting_ID)
             #Attach it to the newdoc object by setting the Document.Setting_ID to Setting (the instance)
             newdoc = Document(docfile = request.FILES['docfile'], Setting_ID = Setting)
+            newdoc.Concentration = form.cleaned_data['Concentration']
             newdoc.save()
             # Redirect to the document list after POST
             return HttpResponseRedirect('')
     else:
         form = DocumentForm() # A empty, unbound form
-
     # Load documents for the list page
     documents = Document.objects.filter(Setting_ID=Setting_ID)
-
     # Render list page with the documents and the form
     return render_to_response('main/upload_setting_files.html', {'documents': documents, 'form': form}, context_instance=RequestContext(request))
+
 
 
 @login_required

@@ -10,7 +10,7 @@
     			<!-- <th>User ID</th> -->
     			<!-- <th>Type</th> -->
     			<th align="left">Name</th>
-    			<th>Action</th>
+    			<th>Analyte conc.</th>
     		{% for document in documents %}
     			<tr>
     					<!--<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
@@ -18,7 +18,8 @@
     					<!--<td align="left">{{ document.docfile.name }}</td> This is the path-->
     					<td align="left">{{ document.docfile }}</td>
     					<!--<td align="center">{{ document.docfile.date }}</td> -->
-    					<td align="center"><a href="{{ document.docfile.url }}">Load</a></td>
+    					<!--<td align="center"><a href="{{ document.docfile.url }}">Load</a></td>-->
+    					<td>{{ document.Concentration }}</td>
     			</tr>
     		{% endfor %}
     		</table>
@@ -33,10 +34,11 @@
 			<p>{{ form.non_field_errors }}</p>
 			<p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
 			<p>
+                {{ form.Concentration }}
 				{{ form.docfile.errors }}
 				{{ form.docfile }}
 			</p>
-			<p><input type="submit" value="Upload" /></p>
+			<p><input type="submit" value="Upload & Save" /></p>
 		</form>
 	  </center>
 {% endblock content %}

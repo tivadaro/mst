@@ -10,22 +10,11 @@ import xml.parsers.expat
 class Project_Settings(models.Model): #The Project_ID is generated automatically and can be reffered as models.ForeignKey(TableName)
     Settings_Name=models.CharField(max_length=100)
     User_ID=models.IntegerField(default=1)
+    #Mass_Over_Charge=models.DecimalField(max_digits=5,decimal_places=3,default=0)
 
 class Test_File(models.Model):
-    File_Name=models.CharField(max_length=100)
-    File_Location=models.CharField(max_length=100)
-    Mass_Over_Charge=models.DecimalField(max_digits=5,decimal_places=3)
-    Concentration=models.DecimalField(max_digits=5,decimal_places=3) #Establish the actual concetration - maybe decide to use pmol injected?
-
-class Standard_Curve_Report(models.Model):
-    Report=models.CharField(max_length=200)
-
-class Setting_File(models.Model):
-    File_Name=models.CharField(max_length=100)
-    File_Location=models.CharField(max_length=100)
-    Mass_Over_Charge=models.DecimalField(max_digits=5,decimal_places=3)
-    Concentration=models.DecimalField(max_digits=5,decimal_places=3) #Establish the actual concetration - maybe decide to use pmol injected?
-    Standard_Curve_Report_ID=models.ForeignKey(Standard_Curve_Report)
+    Mass_Over_Charge=models.DecimalField(max_digits=5,decimal_places=3,default=0)
+    Concentration=models.DecimalField(max_digits=5,decimal_places=3,default=0) #Establish the actual concetration - maybe decide to use pmol injected?
 
 class Projects(models.Model):
     Project_Name=models.CharField(max_length=100)
@@ -43,8 +32,13 @@ def user_directory_path(instance, filename):
 class Document(models.Model):
     docfile=models.FileField(upload_to=user_directory_path)
     Setting_ID=models.ForeignKey(Project_Settings, null=True, blank=True,on_delete=models.SET_NULL)
+    Concentration=models.DecimalField(max_digits=5,decimal_places=3,default=0) #Establish the actual concetration - maybe decide to use pmol injected?
     #def folder_of_loggedin_user_exists: Chek if the loggedin user has a folder in the main documents folder
-    #    return True
+    #return True
+
+class Standard_Curve_Report(models.Model):
+    Report=models.CharField(max_length=200)
+    Setting_ID=models.ForeignKey(Project_Settings, null=True, blank=True,on_delete=models.SET_NULL)
 
 #mzXML specific MS, MS/MS classes
 class MSScan():
