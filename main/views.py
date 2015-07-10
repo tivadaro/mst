@@ -4,6 +4,7 @@ from django.template import Context
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 import datetime
 import os
+import json
 from django.template import RequestContext
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -198,6 +199,19 @@ def upload_setting_files(request, Setting_ID):
 def help_mst(request):
    if request.user.is_authenticated():
        return render(request,'main/help.html',{'username': request.user.username} )
+
+@login_required
+def graph_mst(request):
+   if request.user.is_authenticated():
+        data=    [['Concentration', 'Intensity'],
+                  [ 8,      12],
+                  [ 4,      5.5],
+                  [ 11,     14],
+                  [ 4,      5],
+                  [ 3,      3.5],
+                  [ 6.5,    7]]
+        #return render(request,'main/graph.html',{'username': request.user.username, 'data': json.dumps(data)} )
+        return render(request, 'main/graph.html', {'data': json.dumps(data)})
 
 def login_view(request):
     username = request.POST.get('username', '')

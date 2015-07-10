@@ -1,0 +1,34 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+	  <center>
+            	<h4 style="color:#4FAF5C">This is a typical standard curve generated from a setting</h4>
+            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script type="text/javascript">
+              google.load("visualization", "1", {packages:["corechart"]});
+              google.setOnLoadCallback(drawChart);
+              function drawChart() {
+                var data = google.visualization.arrayToDataTable({{ data | safe }});
+                var options = {
+                  hAxis: {minValue: 0, maxValue: 15, title: 'Concentration'},
+                  vAxis: {minValue: 0, maxValue: 15, title: 'Intensity'},
+                  chartArea: {width:'50%'},
+                  trendlines: {
+                    0: {
+                      type: 'linear',
+                      showR2: true,
+                      visibleInLegend: true
+                    }
+                  }
+                };
+
+                var chartLinear = new google.visualization.ScatterChart(document.getElementById('chartLinear'));
+                chartLinear.draw(data, options);
+
+                options.trendlines[0].type = 'exponential';
+                options.colors = ['#6F9654'];
+              }
+            </script>
+            <div id="chartLinear" style="height: 350px; width: 800px"></div>
+      </center>
+{% endblock content %}
