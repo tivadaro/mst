@@ -8,18 +8,33 @@ position: absolute;
 left: 50%;
 top: 50%;
 text-align: center;
-background-image: url('images/bg.jpg');
+width:210px;
+height:220px;
+margin-left: -105px;
+margin-top: -250px;
+/*border-color:#9ecaed;*/
+border-color:#B8B8B8;
+/*border:1px solid #8aafbb;*/
+border:1px solid #B8B8B8;
+border-radius:20px;
+}
+
+.HelpDiv {
+position: absolute;
+left: 50%;
+top: 50%;
+text-align: center;
 width:1000px;
-height:500px;
-margin-left: -500px; /*half width*/
-margin-top: -250px; /*half height*/
-box-shadow:0 0 10px #9ecaed;
+height:400px;
+margin-left: -500px;
+margin-top: -260px;
 }
 
 input:not([type=file]){
     width:150px;
-    border:1px solid #8aafbb;
-    border-radius:7px;
+    /*border:1px solid #8aafbb;*/
+    border:1px solid #B8B8B8;
+    border-radius:10px;
     font-size:19px;
     padding:5px;
     margin-top-right:-10px;
@@ -40,13 +55,12 @@ table {
   border-collapse: collapse;
   width: 100%;
   outline:none;
-  border-color:#9ecaed;
-  box-shadow:0 0 10px #9ecaed;
 }
 
 th, td {
   padding: 0.25rem;
   border: 1px solid #ccc;
+  border-color:#FFFFFF;
 }
 
 
@@ -135,4 +149,19 @@ form input {
     width:auto;
     margin:5px 0 0 10px;
     padding:5px 5px;
+}
+
+
+.graph-container-right {
+    float:left;
+    padding-bottom: 10px;
+    width: 100px;
+
+}
+
+.graph-container-left {
+    float:left;
+    padding-bottom: 10px;
+    width: 100px;
+
 }

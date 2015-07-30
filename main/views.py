@@ -3,13 +3,13 @@ from django.core.urlresolvers import reverse
 from django.template import Context
 from django.http import HttpResponse,Http404,HttpResponseRedirect
 import datetime
-import os
+import os,sys
 import json
 from django.template import RequestContext
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from main.forms import DocumentForm, NewProjectForm, NewSettingForm, DeleteNewForm
-from main.models import Document, Projects, Project_Settings
+from main.models import Document, Projects, Project_Settings, MSScan, MS1Scan, MS2Scan, mzXML
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
@@ -104,6 +104,26 @@ def projects_mst(request):
             Numbered_Project_List = paginator.page(paginator.num_pages)
        return render(request,'main/projects.html',{'username': request.user.username, 'Project_List': Numbered_Project_List})
 
+
+#@login_required
+#def setting_file_detail(request,Setting_ID, File_Name):
+#   if request.user.is_authenticated():
+#       #Settings_List=Project_Settings.objects.filter(User_ID = request.user.pk).filter(pk = Setting_ID) #get the project ID of the user and from the /project/id request
+#        #filename_mzXML = os.path.join('/home/tivi/mst/media/documents/34/', File_Name)
+#        filename_mzXML = '/home/tivi/mst/media/documents/34/CMS1MS2.mzXML'
+#        if( not os.access(filename_mzXML,os.R_OK) ):
+#            print ("%s is not accessible."%filename_mzXML)
+#        mzXMLo = mzXML()
+#        mzXMLo.parse_file(filename_mzXML)
+#        f_out = open(filename_mzXML+'.ms1','w')
+#        for tmp_ms1 in mzXMLo.MS1_list:
+#            #f_out.write("S\t%06d\t%06d\n"%(tmp_ms1.id, tmp_ms1.id))
+#            #f_out.write("I\tRetTime\t%.2f\n"%(tmp_ms1.retention_time))
+#            f_out.write("RT\t%.2f\n"%(tmp_ms1.retention_time))
+#            for i in range(0,len(tmp_ms1.mz_list)):
+#                f_out.write("%f\t%.2f\t0\n"%(tmp_ms1.mz_list[i],tmp_ms1.intensity_list[i]))
+#        f_out.close()
+#        return render(request,'main/setting_file_detail.html',{'username': request.user.username, 'File_Name':File_Name, "Setting_ID":Setting_ID } )
 
 @login_required
 def project_detail(request, Project_ID):
@@ -201,17 +221,62 @@ def help_mst(request):
        return render(request,'main/help.html',{'username': request.user.username} )
 
 @login_required
-def graph_mst(request):
+def graph_mst(request, Setting_ID, File_Name):
    if request.user.is_authenticated():
-        data=    [['Concentration', 'Intensity'],
-                  [ 8,      12],
-                  [ 4,      5.5],
-                  [ 11,     14],
-                  [ 4,      5],
-                  [ 3,      3.5],
-                  [ 6.5,    7]]
-        #return render(request,'main/graph.html',{'username': request.user.username, 'data': json.dumps(data)} )
-        return render(request, 'main/graph.html', {'data': json.dumps(data)})
+        #data format for the graph
+        #data=    [['Concentration', 'Intensity'],
+        #          [ 8,      12],
+        #          [ 4,      5.5],
+        #          [ 11,     14],
+        #          [ 4,      5],
+        #          [ 3,      3.5],
+        #          [ 6.5,    7]]
+        #filename_mzXML = '/home/tivi/mst/media/documents/34/CMS1MS2.mzXML'
+        filename_mzXML= '/'.join(['/home/tivi/mst/media/documents', str(Setting_ID), File_Name])
+        if( not os.access(filename_mzXML,os.R_OK) ):
+            print ("%s is not accessible."%filename_mzXML)
+        mzXMLo = mzXML()
+        mzXMLo.parse_file(filename_mzXML)
+
+        #We need to get the max absolute intensity of the whole run. This will be our 100%
+        chromatogram=[]
+        chromatogram.append([])
+        chromatogram[0].append('Time')
+        chromatogram[0].append('Relative initensity (%)')
+        #data1=[]
+        #data1.append([])
+        #data1[0].append('m/z')
+        #data1[0].append('Relative initensity (%)')
+        data2=[]
+        data2.append([])
+        data2[0].append('m/z')
+        data2[0].append('Relative initensity (%)')
+        j=1
+        for tmp_ms1 in mzXMLo.MS1_list:
+            chromatogram.append([])
+            chromatogram[j].append(tmp_ms1.retention_time)
+            chromatogram[j].append(max(tmp_ms1.intensity_list))
+        #Gets the highest intensity of all peaks
+            j=j+1
+        #Get the m/z of the current Setting_ID
+        #the data has to be the MS/MS of the ion we defined in the Setting.
+        #Settings_List=Project_Settings.objects.filter(User_ID = request.user.pk).filter(pk = Setting_ID)
+        setting_ion=148
+
+        tmp_ms2 = mzXMLo.MS2_list[1]
+        for i in range(0,len(tmp_ms2.mz_list)):
+            data2.append([])
+            data2[i+1].append(tmp_ms2.mz_list[i])
+            data2[i+1].append(tmp_ms2.intensity_list[i])
+        #print ("This is the length of the tmp_ms2 %s\n", len(tmp_ms2))
+        #i=0
+        #for tmp_ms2 in mzXMLo.MS2_list:
+        #    data2.append([])
+        #    data2[i+1].append(tmp_ms2.mz_list[i])
+        #    data2[i+1].append(tmp_ms2.intensity_list[i])
+        #    i=i+1
+        return render(request,'main/graph.html',{'username': request.user.username, 'data2': json.dumps(data2),'chromatogram': json.dumps(chromatogram),'setting_ion': setting_ion} )
+        #return render(request, 'main/graph.html', {'data': json.dumps(data)})
 
 def login_view(request):
     username = request.POST.get('username', '')

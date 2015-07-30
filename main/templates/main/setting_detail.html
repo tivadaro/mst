@@ -37,20 +37,13 @@
     			<tr>
     					<!--<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
     					<!--<td align="center">{{ document.Setting_ID.pk }}</td> -->
-    					<td align="left">{{ document.docfile }}</td>
-    					<!--<td align="center">{{ document.docfile.date }}</td> -->
-    					<!--<td><a href="{{ document.docfile.url }}">Load</a></td>-->
+    					<!--<td align="left">{{ document.docfile }}</td> -->
+    					<td align="left"><a href="{{ document.docfile.url }} " title="Click to add show details about this setting file">{{ document.docfile.name }}</a></td>
     					<td>{{ document.Concentration }}</td>
     			</tr>
             {% endfor %}
     		</table>
     		</ul>
-            	<h4 style="color:#4FAF5C">You can now generate a standard curve for this setting.</h4>
-                <!--Form to generate the report using the docs and the concentration-->
-                <form method="POST" class="post-form">
-                    {% csrf_token %}
-                    <input type="submit" width="200" value="Generate">
-                </form>
     	{% else %}
     		<p>No setting files found!</p>
     	{% endif %}

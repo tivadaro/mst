@@ -3,8 +3,10 @@ from main import views
 
 urlpatterns = [
     url(r'^about/$',  views.about_mst),
-    url(r'^graph/$',  views.graph_mst),
+    #url(r'^graph/$',  views.graph_mst),
     url(r'^help/$',  views.help_mst),
+    #url(r'^media/documents/(?P<Setting_ID>[0-9]+)/(?P<File_Name>[\w,\s-]+\.[A-Za-z]{5})$',  views.setting_file_detail),
+    url(r'^media/documents/(?P<Setting_ID>[0-9]+)/(?P<File_Name>[\w,\s-]+\.[A-Za-z]{5})$',  views.graph_mst),
     url(r'^project/(?P<Project_ID>[0-9]+)/$',  views.project_detail),
     url(r'^project/(?P<Project_ID>[0-9]+)/link_project_to_setting/$',  views.link_project_to_setting),
     url(r'^project/(?P<Project_ID>[0-9]+)/link_project_to_setting/(?P<Setting_ID>[0-9]+)/$',  views.link_project_to_setting_save),

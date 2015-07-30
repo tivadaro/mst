@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+{% block content %}
+	<!--Load the document assoaciated with this setting ID-->
+	    {% if documents %}
+    		<ul>
+    		<h4><left>Uploaded setting files</left></h4>
+    		<table id="custom">
+    			<!-- <th>User ID</th> -->
+    			<!-- <th>Type</th> -->
+    			<th align="left">Uploaded setting files</th>
+    			<th align="center">Analyte conc.</th>
+    		{% for document in documents %}
+    			<tr>
+    					<!--<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
+    					<!--<td align="center">{{ document.Setting_ID.pk }}</td> -->
+    					<!--<td align="left">{{ document.docfile }}</td> -->
+    					<td align="left"><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></td>
+    					<td>{{ document.Concentration }}</td>
+    			</tr>
+            {% endfor %}
+    		</table>
+    	{% endif %}
+{% endblock content %}

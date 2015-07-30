@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
   {% load static from staticfiles %}
-  <p><center><h3>Mass Spectrometry Toolbox</h3> Welcome {{ user.first_name }}</center></p>
+  <center><h4>{{ user.first_name }}, welcome to your MST dashboard.</h4></center>
   <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
   <body>
   <div class="wrapper"> <!-- for the footer-->
@@ -14,12 +14,11 @@
 				<!--<li><a href="/accounts/profile/">HOME</a></li>-->
 				<li><a href="/projects">PROJECTS</a></li>
 				<li><a href="/new_project">NEW PROJECT</a></li>
-				<li><a href="/help">HELP</a></li>
-				<li><a href="/about">ABOUT</a></li>
-				<li><a href="/graph">GRAPH</a></li>
 				<li><a href="/settings">SETTINGS</a></li>
 				<li><a href="/new_setting">NEW SETTING</a></li>
- 			<li><a href="/accounts/logout/?next=/">LOGOUT</a></li> <!-- Using ?next=/ will redirect to login after logout-->
+				<li><a href="/help">HELP</a></li>
+				<li><a href="/about">ABOUT</a></li>
+     			<li><a href="/accounts/logout/?next=/">LOGOUT</a></li> <!-- Using ?next=/ will redirect to login after logout-->
 			</ul>
 		</div>
 <br/>

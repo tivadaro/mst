@@ -1,17 +1,19 @@
 {% extends "main/base.html" %}
-
 {% block content %}
-	  <center>
-            	<h4 style="color:#4FAF5C">This is a typical standard curve generated from a setting</h4>
+
+<!--<h4 style="color:#4FAF5C">This is a typical standard curve generated from a setting</h4>-->
+<!-- Use this graph  to show the Standard curve -->
+<!--
             <script type="text/javascript" src="https://www.google.com/jsapi"></script>
             <script type="text/javascript">
               google.load("visualization", "1", {packages:["corechart"]});
               google.setOnLoadCallback(drawChart);
               function drawChart() {
-                var data = google.visualization.arrayToDataTable({{ data | safe }});
+                var data = google.visualization.arrayToDataTable({{ data1 | safe }});
                 var options = {
-                  hAxis: {minValue: 0, maxValue: 15, title: 'Concentration'},
-                  vAxis: {minValue: 0, maxValue: 15, title: 'Intensity'},
+                  title: 'Standard curve',
+                  hAxis: {minValue: 0, maxValue: 2000, title: 'Concentration'},
+                  vAxis: {minValue: 0, maxValue: 100, title: 'Intensity'},
                   chartArea: {width:'50%'},
                   trendlines: {
                     0: {
@@ -28,7 +30,54 @@
                 options.trendlines[0].type = 'exponential';
                 options.colors = ['#6F9654'];
               }
-            </script>
-            <div id="chartLinear" style="height: 350px; width: 800px"></div>
-      </center>
+</script>
+-->
+<!-- Use this graph  to show typical chromatograms Retention time/Intensity grahs -->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['corechart', 'bar']});
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+      var data = google.visualization.arrayToDataTable({{ chromatogram | safe }});
+
+      var options =
+        {
+            title: 'Base peak chromatogram for m/z ' + {{ setting_ion | safe }},
+            chartArea: {width: '50%'},
+            hAxis: {title: 'Time (min)', minValue: 0,},
+            vAxis: {title: 'Relative intensity (%)', minValue: 0,}
+        };
+      var chart = new google.visualization.LineChart(document.getElementById('chromatogram_div'));
+      chart.draw(data, options);
+    }
+</script>
+
+<!-- Use this graph  to show typical m/z-Intensity grahs -->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+google.load('visualization', '1', {packages: ['corechart', 'bar']});
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+      var data = google.visualization.arrayToDataTable({{ data2 | safe }});
+
+      var options =
+        {
+            title: 'MS/MS spectrum for the current ion under study',
+            chartArea: {width: '50%'},
+            hAxis: {title: 'm/z', minValue: 0, maxValue: 2000},
+            vAxis: {title: 'Intensity', minValue: 0},
+            bar: { groupWidth: "90%" }
+        };
+      var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(data, options);
+    }
+</script>
+
+
+
+    <div class="graph-container-left" div id="chromatogram_div" style="height: 350px; width: 800px"></div>
+    <div class="graph-container-right" div id="chartLinear" style="height: 350px; width: 800px"></div>
+    <div class="graph-container-left" div id="chart_div" style="height: 350px; width: 800px"></div>
 {% endblock content %}
