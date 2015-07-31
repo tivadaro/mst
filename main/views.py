@@ -203,6 +203,7 @@ def upload_setting_files(request, Setting_ID):
             #Attach it to the newdoc object by setting the Document.Setting_ID to Setting (the instance)
             newdoc = Document(docfile = request.FILES['docfile'], Setting_ID = Setting)
             newdoc.Concentration = form.cleaned_data['Concentration']
+            newdoc.file_name=request.FILES['docfile'].name
             newdoc.save()
             # Redirect to the document list after POST
             return HttpResponseRedirect('')
@@ -238,6 +239,12 @@ def graph_mst(request, Setting_ID, File_Name):
         mzXMLo = mzXML()
         mzXMLo.parse_file(filename_mzXML)
 
+        #Get the m/z of the current Setting_ID
+        #the data has to be the MS/MS of the ion we defined in the Setting.
+        Mass_Over_Charge_List=Project_Settings.objects.filter(User_ID = request.user.pk).filter(pk = Setting_ID)
+        for setting_ion_item in Mass_Over_Charge_List:
+            setting_ion=setting_ion_item.Mass_Over_Charge
+
         #We need to get the max absolute intensity of the whole run. This will be our 100%
         chromatogram=[]
         chromatogram.append([])
@@ -247,27 +254,33 @@ def graph_mst(request, Setting_ID, File_Name):
         #data1.append([])
         #data1[0].append('m/z')
         #data1[0].append('Relative initensity (%)')
-        data2=[]
-        data2.append([])
-        data2[0].append('m/z')
-        data2[0].append('Relative initensity (%)')
+        data=[]
+        data.append([])
+        data[0].append('m/z')
+        data[0].append('Relative initensity (%)')
+
         j=1
         for tmp_ms1 in mzXMLo.MS1_list:
             chromatogram.append([])
-            chromatogram[j].append(tmp_ms1.retention_time)
-            chromatogram[j].append(max(tmp_ms1.intensity_list))
-        #Gets the highest intensity of all peaks
+            chromatogram[j].append(tmp_ms1.retention_time/60) #Data in the mzXML files is saved in seconds
+            chromatogram[j].append(max(tmp_ms1.intensity_list)) #Gets the highest intensity of all peaks
             j=j+1
-        #Get the m/z of the current Setting_ID
-        #the data has to be the MS/MS of the ion we defined in the Setting.
-        #Settings_List=Project_Settings.objects.filter(User_ID = request.user.pk).filter(pk = Setting_ID)
-        setting_ion=148
+
+        #max_chromatogram_intensity_list=[]
+        #max_chromatogram_intensity_list.append([])
+        #Normalize the chromatogram intensity list
+        #for index in range(1, len(chromatogram)-1):
+        #    max_chromatogram_intensity_list[index-1].append(chromatogram[index][1]) #copy the list of all intensities (second position in the chromatogram list)
+
+        #max_chromatogram_intensity = max(max_chromatogram_intensity_list)
+        #for index in range (0,len(chromatogram)):
+        #    chromatogram[index]=(chromatogram[index]*100)/max_chromatogram_intensity
 
         tmp_ms2 = mzXMLo.MS2_list[1]
         for i in range(0,len(tmp_ms2.mz_list)):
-            data2.append([])
-            data2[i+1].append(tmp_ms2.mz_list[i])
-            data2[i+1].append(tmp_ms2.intensity_list[i])
+            data.append([])
+            data[i+1].append(tmp_ms2.mz_list[i])
+            data[i+1].append(tmp_ms2.intensity_list[i])
         #print ("This is the length of the tmp_ms2 %s\n", len(tmp_ms2))
         #i=0
         #for tmp_ms2 in mzXMLo.MS2_list:
@@ -275,7 +288,7 @@ def graph_mst(request, Setting_ID, File_Name):
         #    data2[i+1].append(tmp_ms2.mz_list[i])
         #    data2[i+1].append(tmp_ms2.intensity_list[i])
         #    i=i+1
-        return render(request,'main/graph.html',{'username': request.user.username, 'data2': json.dumps(data2),'chromatogram': json.dumps(chromatogram),'setting_ion': setting_ion} )
+        return render(request,'main/graph.html',{'username': request.user.username, 'data': json.dumps(data),'chromatogram': json.dumps(chromatogram),'setting_ion': setting_ion} )
         #return render(request, 'main/graph.html', {'data': json.dumps(data)})
 
 def login_view(request):

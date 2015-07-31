@@ -16,7 +16,7 @@
     					<!--<td align="center">{{ user.pk }}</td> <!-- pk - primary key -->
     					<!--<td align="center">{{ document.Setting_ID.pk }}</td> -->
     					<!--<td align="left">{{ document.docfile.name }}</td> This is the path-->
-    					<td align="left">{{ document.docfile }}</td>
+    					<td align="left" ><a href="{{ document.docfile.url }}">{{ document.file_name}}</a></td>
     					<!--<td align="center">{{ document.docfile.date }}</td> -->
     					<!--<td align="center"><a href="{{ document.docfile.url }}">Load</a></td>-->
     					<td>{{ document.Concentration }}</td>

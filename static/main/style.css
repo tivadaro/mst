@@ -24,9 +24,9 @@ position: absolute;
 left: 50%;
 top: 50%;
 text-align: center;
-width:1000px;
-height:400px;
-margin-left: -500px;
+width:800px;
+/*height:400px;*/
+margin-left: -400px;
 margin-top: -260px;
 }
 
