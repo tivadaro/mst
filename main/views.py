@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from main.forms import DocumentForm, NewProjectForm, NewSettingForm, DeleteNewForm
 from main.models import Document, Projects, Project_Settings, MSScan, MS1Scan, MS2Scan, mzXML
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import numpy as np
 
 # Create your views here.
 @login_required
@@ -173,7 +174,53 @@ def setting_detail(request, Setting_ID):
    if request.user.is_authenticated():
        Settings_List=Project_Settings.objects.filter(User_ID = request.user.pk).filter(pk = Setting_ID) #get the project ID of the user and from the /project/id request
        documents = Document.objects.filter(Setting_ID=Setting_ID)
-       return render(request,'main/setting_detail.html',{'username': request.user.username, 'Settings_List': Settings_List, 'documents': documents} )
+       #prepare the chromatograms data using the file names from documents
+       #Get the m/z of the current Setting_ID
+       #the data has to be the MS/MS of the ion we defined in the Setting.
+       Mass_Over_Charge_List=Project_Settings.objects.filter(User_ID = request.user.pk).filter(pk = Setting_ID)
+       for setting_ion_item in Mass_Over_Charge_List:
+           setting_ion=setting_ion_item.Mass_Over_Charge
+       #We need to get the max absolute intensity of the whole run. This will be our 100%
+       chromatogram=[]
+       chromatogram.append([])
+       chromatogram[0].append('Time')
+       for document_item in documents: #Append the filenames to distinguis chromatograms
+           chromatogram[0].append(str(document_item.file_name))
+       return render(request,'main/setting_detail.html',{'username': request.user.username, 'Settings_List': Settings_List, 'documents': documents,'setting_ion':setting_ion})
+       #Take the first file and populate the retention time and the intensity
+       #document_item = documents[0]
+       #filename_mzXML= '/'.join(['/home/tivi/mst/media/documents', str(Setting_ID), document_item.file_name])
+       #if( not os.access(filename_mzXML,os.R_OK) ):
+        #  print ("%s is not accessible."%filename_mzXML)
+       #print("These are the documents that I will read and workon %s",filename_mzXML)
+       #mzXMLo = mzXML()
+       #mzXMLo.parse_file(filename_mzXML)
+       #j=1
+       #for tmp_ms1 in mzXMLo.MS1_list:
+        #  chromatogram.append([])
+        #  chromatogram[j].append(format(tmp_ms1.retention_time, '.1f')) #Data in the mzXML files is saved in seconds
+        #  chromatogram[j].append(max(tmp_ms1.intensity_list)) #Gets the highest intensity of all peaks
+        #  #print("This is the intensity list of %s\n",(tmp_ms1.retention_time)/60,*tmp_ms1.intensity_list)
+        #  j=j+1
+       #By now we have two columns filled. Next each file will only populate one column (with the mz_list). The retention time is the same in all files???
+       #Unfortunately the retention time is not the same in all files. So before we can show all chromatograms in the same graph
+       #This needs be solved
+       #document_number=len(documents) #The number of files that need to be processed and added to the chromatogram list
+       #print("This is the document number%d\n", document_number)
+       #for index in range (1,document_number):
+        #   document_item = documents[index]
+        #   filename_mzXML= '/'.join(['/home/tivi/mst/media/documents', str(Setting_ID), document_item.file_name])
+        #   if( not os.access(filename_mzXML,os.R_OK) ):
+        #       print ("%s is not accessible."%filename_mzXML)
+        #   print("These are the documents that I will add to the existing list %s\n",filename_mzXML)
+        #   mzXMLo = mzXML()
+        #   mzXMLo.parse_file(filename_mzXML)
+        #   j=1
+        #   for tmp_ms1 in mzXMLo.MS1_list:
+        #       chromatogram.append([])
+        #       chromatogram[j].append(max(tmp_ms1.intensity_list)) #Gets the highest intensity of all peaks
+        #       j=j+1
+
 
 @login_required
 def project_delete(request, Project_ID):
@@ -275,6 +322,9 @@ def graph_mst(request, Setting_ID, File_Name):
         #max_chromatogram_intensity = max(max_chromatogram_intensity_list)
         #for index in range (0,len(chromatogram)):
         #    chromatogram[index]=(chromatogram[index]*100)/max_chromatogram_intensity
+        file_has_MSMS=False
+        if len(mzXMLo.MS2_list)>0:
+            file_has_MSMS=True #set this to 0 since there is no MSMS data. This var is used so the MSMS chart is not displayed in graph.html
 
         tmp_ms2 = mzXMLo.MS2_list[1]
         for i in range(0,len(tmp_ms2.mz_list)):
@@ -288,8 +338,9 @@ def graph_mst(request, Setting_ID, File_Name):
         #    data2[i+1].append(tmp_ms2.mz_list[i])
         #    data2[i+1].append(tmp_ms2.intensity_list[i])
         #    i=i+1
-        return render(request,'main/graph.html',{'username': request.user.username, 'data': json.dumps(data),'chromatogram': json.dumps(chromatogram),'setting_ion': setting_ion} )
+        return render(request,'main/graph.html',{'username': request.user.username, 'data': json.dumps(data),'chromatogram': json.dumps(chromatogram),'setting_ion': setting_ion,'file_has_MSMS': file_has_MSMS} )
         #return render(request, 'main/graph.html', {'data': json.dumps(data)})
+
 
 def login_view(request):
     username = request.POST.get('username', '')

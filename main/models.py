@@ -121,7 +121,7 @@ class mzXML():
 
     def _char_data(self,data):
         if( self.current_tag == 'precursorMz' ):
-            print("This is the data to be converted to float%s:\n",data)
+            #print("This is the data to be converted to float%s:\n",data)
             self.MS2_list[-1].precursor_mz = float(data)
         if( self.current_tag == 'peaks' ):
             mz_list, intensity_list = self.decode_spectrum(data)

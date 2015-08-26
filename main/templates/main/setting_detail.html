@@ -1,7 +1,7 @@
 {% extends "main/base.html" %}
 {% block content %}
 
-   	<!-- List all projects of the logged in user -->
+   	<!-- List all settings of the logged in user -->
 	{% if Settings_List %}
 		<ul>
             <table id='custom'>
@@ -44,6 +44,28 @@
             {% endfor %}
     		</table>
     		</ul>
+    		<!--This is where we could display the data with the existing chromatograms-->
+                <!-- Use this graph  to show typical chromatograms Retention time/Intensity grahs -->
+                <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+                <script type="text/javascript">
+                google.load('visualization', '1', {packages: ['corechart', 'bar']});
+                google.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+                      var data = google.visualization.arrayToDataTable({{ chromatogram | safe }});
+
+                      var options =
+                        {
+                            title: 'Base peak chromatogram for m/z ' + {{ setting_ion | safe }},
+                            chartArea: {width: '50%'},
+                            hAxis: {title: 'Time (min)', minValue: 0,},
+                            vAxis: {title: 'Relative intensity (%)', minValue: 0,}
+                        };
+                      var chart = new google.visualization.LineChart(document.getElementById('chromatogram_div'));
+                      chart.draw(data, options);
+                    }
+                </script>
+                <div class="graph-container-left" div id="chromatogram_div" style="height: 350px; width: 800px"></div>
     	{% else %}
     		<p>No setting files found!</p>
     	{% endif %}

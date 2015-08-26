@@ -9,16 +9,14 @@
 </head>
 <body>
 <div class="loginDiv">
-        <span>
-        <h2>MST login:</h2>
-        <form id="login_form" method="post" action="" align="center">
+        <form id="login_form" method="post" action="">
             {% csrf_token %}
-                  <input type="text" name="username" value="" id="username" placeholder="Username">
-                  <input type="password" name="password" value="" id="password" placeholder="Password">
-                  <input type="submit" value="Login">
-                  <input type="hidden" name="next.html" value="/">
+                      <input type="text" name="username" value="" id="username" placeholder="Username">
+                      <input type="password" name="password" value="" id="password" placeholder="Password">
+                      <input type="submit" value="Login">
+                      <input type="hidden" name="next.html" value="/">
         </form>
-        </span>
+        <p></p>
 </div>
 </body>
 </html>
