@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from main.forms import DocumentForm, NewProjectForm, NewSettingForm, DeleteNewForm
 from main.models import Document, Projects, Project_Settings, MSScan, MS1Scan, MS2Scan, mzXML
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-import numpy as np
+
 
 # Create your views here.
 @login_required
@@ -186,29 +186,31 @@ def setting_detail(request, Setting_ID):
        chromatogram[0].append('Time')
        for document_item in documents: #Append the filenames to distinguis chromatograms
            chromatogram[0].append(str(document_item.file_name))
-       return render(request,'main/setting_detail.html',{'username': request.user.username, 'Settings_List': Settings_List, 'documents': documents,'setting_ion':setting_ion})
+       #return render(request,'main/setting_detail.html',{'username': request.user.username, 'Settings_List': Settings_List, 'documents': documents,'setting_ion':setting_ion})
+
        #Take the first file and populate the retention time and the intensity
-       #document_item = documents[0]
-       #filename_mzXML= '/'.join(['/home/tivi/mst/media/documents', str(Setting_ID), document_item.file_name])
-       #if( not os.access(filename_mzXML,os.R_OK) ):
-        #  print ("%s is not accessible."%filename_mzXML)
-       #print("These are the documents that I will read and workon %s",filename_mzXML)
-       #mzXMLo = mzXML()
-       #mzXMLo.parse_file(filename_mzXML)
-       #j=1
-       #for tmp_ms1 in mzXMLo.MS1_list:
-        #  chromatogram.append([])
-        #  chromatogram[j].append(format(tmp_ms1.retention_time, '.1f')) #Data in the mzXML files is saved in seconds
-        #  chromatogram[j].append(max(tmp_ms1.intensity_list)) #Gets the highest intensity of all peaks
-        #  #print("This is the intensity list of %s\n",(tmp_ms1.retention_time)/60,*tmp_ms1.intensity_list)
-        #  j=j+1
-       #By now we have two columns filled. Next each file will only populate one column (with the mz_list). The retention time is the same in all files???
-       #Unfortunately the retention time is not the same in all files. So before we can show all chromatograms in the same graph
-       #This needs be solved
-       #document_number=len(documents) #The number of files that need to be processed and added to the chromatogram list
-       #print("This is the document number%d\n", document_number)
-       #for index in range (1,document_number):
-        #   document_item = documents[index]
+       for document_item in documents:
+            filename_mzXML= '/'.join(['/home/tivi/mst/media/documents', str(Setting_ID), document_item.file_name])
+            if( not os.access(filename_mzXML,os.R_OK) ):
+                print ("%s is not accessible."%filename_mzXML)
+            print("These are the documents that I will read and workon %s",filename_mzXML)
+            #filename_mzXML contains the path for each file
+            mzXMLo = mzXML()
+            mzXMLo.parse_file(filename_mzXML)
+            j=1
+            for tmp_ms1 in mzXMLo.MS1_list:
+                chromatogram.append([])
+                chromatogram[j].append(format(tmp_ms1.retention_time, '.1f')) #Data in the mzXML files is saved in seconds
+                chromatogram[j].append(max(tmp_ms1.intensity_list)) #Gets the highest intensity of all peaks
+                #print("This is the intensity list of %s\n",(tmp_ms1.retention_time)/60,*tmp_ms1.intensity_list)
+                j=j+1
+            #By now we have two columns filled. Next each file will only populate one column (with the mz_list). The retention time is the same in all files???
+            #Unfortunately the retention time is not the same in all files. So before we can show all chromatograms in the same graph
+            #This needs be solved
+            #document_number=len(documents) #The number of files that need to be processed and added to the chromatogram list
+            #print("This is the document number%d\n", document_number)
+            #for index in range (1,document_number):
+        #    document_item = documents[index]
         #   filename_mzXML= '/'.join(['/home/tivi/mst/media/documents', str(Setting_ID), document_item.file_name])
         #   if( not os.access(filename_mzXML,os.R_OK) ):
         #       print ("%s is not accessible."%filename_mzXML)
@@ -220,7 +222,7 @@ def setting_detail(request, Setting_ID):
         #       chromatogram.append([])
         #       chromatogram[j].append(max(tmp_ms1.intensity_list)) #Gets the highest intensity of all peaks
         #       j=j+1
-
+       return render(request,'main/setting_detail.html',{'username': request.user.username, 'Settings_List': Settings_List, 'documents': documents,'setting_ion':setting_ion})
 
 @login_required
 def project_delete(request, Project_ID):

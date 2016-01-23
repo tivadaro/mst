@@ -1,19 +1,26 @@
-
 {% extends "main/base.html" %}
+{% load static from staticfiles %}
 
 {% block content %}
 	  <center>
 	      <div class="HelpDiv">
           <p align="justify" style="text-align:justify">
 	      Mass Spectrometry Toolbox (MST) is a collection of tools to help in the analysis of mass spectrometric data. It provides a user specific and intuitive dashboard for quantification of a specific analyte. Quantification is based on a standard curve constructed using a relevant standard similar to the analyte under study.<br/>
-	      MST offers a system that assigns each user a workspace where he can create projects. The project is connected to the actual test file to be analysed. Each project needs a setting.
+	      MST offers a system that assigns each user a workspace where he can create projects.</br></p>
+          <right><img src="{% static 'main/images/project.png' %}" alt="Dashboard view" /></right>
+	      <p align="justify" style="text-align:justify">The project is connected to the actual test file to be analysed. Each project needs a setting.
           Settings are just a collection of files that all share the mass to charge ratio (m/z) of the standard analyte (or a very similar analyte) that is under question.
           Each file represents an analysis (similar to the test file linked to the project) of the analyte under question at different concentrations.
-          A typicall setting includes a sequence of 7 or more files that represent a series sequencial dillution of the analyte).
+          <img src="{% static 'main/images/setting.png' %}" alt="Setting view"></br>
+          <p align="justify" style="text-align:justify">A typicall setting includes a sequence of 7 or more files that represent a series sequencial dillution of the analyte).
           As a consequence, each setting file needs to have an analyte concetration added at the time of the upload.
+          <img src="{% static 'main/images/setting_detail.png' %}" alt="Setting view"></br>
           The m/z is set for all files when the setting is created since is identical for all files within the setting. After all files associated to one setting are uploaded and the
-          corresponding anlyte concentrations saved the Standard Curve can be generated. After the standard curve is generated the user is ready to analyse the test file and generate a comprehensive report.
+          corresponding anlyte concentrations saved the Standard Curve can be generated. After the standard curve is generated the user is ready to analyse the test file and generate a comprehensive report.</br>
+	      <img src="{% static 'main/images/setting_file_detail.png' %}" alt="Setting view" width ="800" >
 	      </p>
 	      </div>
       </center>
+
+
 {% endblock content %}

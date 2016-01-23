@@ -111,7 +111,8 @@ class mzXML():
             if( self.msLevel == 1 ):
                 self.MS1_list.append(tmp_ms)
             elif( self.msLevel == 2 ):
-                tmp_ms.ms1_id = self.MS1_list[-1].id
+                if self.MS1_list: #if self.MS1_list is not empty. Check why is sometimes epmty!!!
+                    tmp_ms.ms1_id = self.MS1_list[-1].id
                 self.MS2_list.append(tmp_ms)
 
     def _end_element(self,name):
@@ -142,7 +143,7 @@ class mzXML():
         mzXML_file.close()
         #print("This is the value of contentXML",mzXML_file_content)
         expat = xml.parsers.expat.ParserCreate()        #start a new parser
-        expat.buffer_size=20000
+        expat.buffer_size=20000000
         expat.StartElementHandler = self._start_element #define the Start element handler?
         expat.EndElementHandler = self._end_element     #define the End elemnet handler
         expat.CharacterDataHandler = self._char_data    #define the character handler

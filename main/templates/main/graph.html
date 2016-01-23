@@ -55,7 +55,7 @@ function drawChart() {
 </script>
 <!-- Use this graph  to show typical m/z-Intensity grahs -->
 
-<div class="graph-container-left" div id="chromatogram_div" style="height: 350px; width: 800px"></div>
+<div class="graph-container-center" div id="chromatogram_div" style="height: 350px; width: 800px"></div>
 
 
 {% if file_has_MSMS %}
@@ -81,11 +81,11 @@ function drawChart() {
         }
     </script>
 
-    <div class="graph-container-right" div id="msms_div" style="height: 350px; width: 800px"></div>
+    <div class="graph-container-center" div id="msms_div" style="height: 350px; width: 800px"></div>
 
 {% else %}
     <p>I am here</p>
-    <div class="graph-container-right" style="height: 350px; width: 800px"><h4 style="color:#FA8258">The selected file has no MS/MS data!</h4></div>
+    <div class="graph-container-center" style="height: 350px; width: 800px"><h4 style="color:#FA8258">The selected file has no MS/MS data!</h4></div>
 
 {% endif %}
 

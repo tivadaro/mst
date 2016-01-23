@@ -4,11 +4,14 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+
+
 <head>
   <title>MST</title>
+
 </head>
 <body>
-<div class="loginDiv">
+  <div class="loginDiv">
         <form id="login_form" method="post" action="">
             {% csrf_token %}
                       <input type="text" name="username" value="" id="username" placeholder="Username">
@@ -16,8 +19,41 @@
                       <input type="submit" value="Login">
                       <input type="hidden" name="next.html" value="/">
         </form>
-        <p></p>
 </div>
+	  <center>
+	      <div class="HelpDiv">
+              <p align="justify" style="text-align:justify; color:#3399FF; font-size: 40px;">Mass Spectrometry Toolbox (MST) is a collection of tools to quantify a specific analyte using mass spectrometry data.</br></p>
+              <p align="justify" style="text-align:justify">
+    	      The raw data file obtained from the mass spectrometer is first converted to the an <a href="http://tools.proteomecenter.org/wiki/index.php?title=Formats:mzXML">mzXML</a> file.</br>
+    	      The mzXML file is then used to quantify the analyte. The quantification is based on a standard curve (also called a <a href="https://en.wikipedia.org/wiki/Calibration_curve">callibration curve</a>).
+    	      The standard curve is created using a relevant compound similar to the analyte under study.
+    	      A typical standard for an analyte could be the deuterium labeled analyte or just a very similar molecule.<br/>
+    	      <p align="justify" style="text-align:justify; color:#3399FF; font-size: 40px;">Each user has its own workspace and the flow of the data analysis was designed to be simple and intuitive.</br></p>
+              <p align="justify" style="text-align:justify; color:green;">STEP 1 - Create a new project</br></p>
+              <img src="{% static 'main/images/main.png' %}" alt="Dashboard view" style="border:2px dotted gray"/></br>
+
+              <p align="justify" style="text-align:justify">
+              A project is created when the user initiates a new analysis. A project contains all the setting files, test file, and the report files.</br>
+              Users can create new projects by selecting the <img src="{% static 'main/images/new_project.png' %}" size="75%" style="border:2px dotted gray"> button on the main menu.</p>
+
+              <p align="justify" style="text-align:justify; color:green;">STEP 2 - Create a setting for the project</br></p>
+              <p align="justify" style="text-align:justify">Each project needs a setting. A setting is just a collection of files (we will call them setting files). All files from a setting share the mass to charge ratio (m/z) of the standard analyte under question.
+              A new setting can be created and subsequently linked to the active project by selecting the <img src="{% static 'main/images/new_setting.png' %}" size="50%" style="border:2px dotted gray"> button on the main menu.
+              Each file represents an analysis (similar to the test file linked to the project) of the analyte under question at different concentrations.</p>
+              <img src="{% static 'main/images/setting.png' %}" alt="Setting view" style="border:2px dotted gray"></br>
+
+              <p align="justify" style="text-align:justify; color:green;">STEP 3 - Add files to the newly created setting</br></p>
+              <p align="justify" style="text-align:justify">A typicall setting includes a collection of 7 or more files. Each file is linked to a specific concentration.
+              Each concentration is a added as a dillution of the stock concentration of the analyte. Values range from 1 (stock molar concentration) down to 10<sup>-9</sup>.
+              As a consequence, each setting file needs to have an analyte concetration added at the time of the upload.</br>
+              <img src="{% static 'main/images/setting_detail.png' %}" alt="Setting view" style="border:2px dotted gray"></br>
+              The m/z is set for all files when the setting is created since is identical for all files within the setting. After all files associated to one setting are uploaded and the
+              corresponding anlyte concentrations saved the standard curve can be generated.
+              <p align="justify" style="text-align:justify; color:#3399FF; font-size: 40px;">After the standard curve is generated, the test file can be uploaded and analyzed. After the analysis, a link to the comprehensive report will be available in the main project space.</br></p>
+    	      <img src="{% static 'main/images/setting_file_detail.png' %}" alt="Setting view" width="1000" style="border:2px dotted gray" >
+    	      </p>
+	      </div>
+      </center>
+
 </body>
 </html>
-

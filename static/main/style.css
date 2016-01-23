@@ -4,19 +4,10 @@ li a {
 }
 
 .loginDiv {
-position: absolute;
-left: 50%;
-top: 50%;
-text-align: center;
-width:340px;
-height:150px;
-margin-left: -175px;
-margin-top: -250px;
-/*border-color:#9ecaed;*/
-border-color:#B8B8B8;
-/*border:1px solid #8aafbb;*/
-border:1px solid #B8B8B8;
-border-radius:20px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 150px;
 }
 
 .HelpDiv {
@@ -24,18 +15,23 @@ position: absolute;
 left: 50%;
 top: 50%;
 text-align: center;
-width:800px;
+width:1000px;
 /*height:400px;*/
-margin-left: -400px;
-margin-top: -260px;
+margin-left: -500px;
+margin-top: -425px;
+font-family: 'Open Sans','Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+font-size: 25px;
+color: gray;
+
 }
 
+
 input:not([type=file]){
-    width:300px;
+    width:150px;
     /*border:1px solid #8aafbb;*/
     border:1px solid #B8B8B8;
     border-radius:10px;
-    font-size:19px;
+    font-size:15px;
     padding:5px;
     /*margin-top-right:-10px;*/
 }
@@ -78,6 +74,10 @@ body {
   padding: 50px 0px 150px;
   font-size: 19px;
   left: +20px;
+  background-size: cover;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   -o-background-size: cover;
 }
 
 
@@ -153,7 +153,7 @@ form input {
 
 
 .graph-container-right {
-    float:left;
+    float:right;
     padding-bottom: 10px;
     width: 100px;
 
@@ -165,3 +165,11 @@ form input {
     width: 100px;
 
 }
+
+.graph-container-center {
+    float:center;
+    padding-bottom: 10px;
+    width: 100px;
+
+}
+
