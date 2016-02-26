@@ -3,6 +3,7 @@ from django.test import TestCase
 class SimpleTest(TestCase):
     def test_basic_addition(self):
         """
-        Tests that 1 + 1 always equals 2.
+        Tests that 2 > 1.
         """
-        self.failUnlessEqual(1 + 1, 2)
+        if 2 > 1:
+            return True

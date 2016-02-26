@@ -24,6 +24,10 @@
 	      <div class="HelpDiv">
               <p align="justify" style="text-align:justify; color:#3399FF; font-size: 40px;">Mass Spectrometry Toolbox (MST) is a collection of tools to quantify a specific analyte using mass spectrometry data.</br></p>
               <p align="justify" style="text-align:justify">
+    	      Mass spectrometry instruments generate a large amount of data. A typical 3D mass spectrum is shown bellow using the m/z parameter collected over time (min).
+    	      The intensity of each peak is represented on the OZ axis. This 3D representation is the first level. Each peak from this level can have it's own 3D mass spectrum linked to it if it's intensity is above a specified threshold. The maximum depth (i.e., number of levels) can go up to nine levels deep.
+    	      The data is highly structured within each level. However, the presence of extra deeper level(s) at specific items results in an increased data complexity.</br>
+    	      <img src="{% static 'main/images/MS1.jpg' %}" width="1000" alt="MS1 view" style="border:2px dotted gray"/></br>
     	      The raw data file obtained from the mass spectrometer is first converted to the an <a href="http://tools.proteomecenter.org/wiki/index.php?title=Formats:mzXML">mzXML</a> file.</br>
     	      The mzXML file is then used to quantify the analyte. The quantification is based on a standard curve (also called a <a href="https://en.wikipedia.org/wiki/Calibration_curve">callibration curve</a>).
     	      The standard curve is created using a relevant compound similar to the analyte under study.
@@ -47,8 +51,8 @@
               Each concentration is a added as a dillution of the stock concentration of the analyte. Values range from 1 (stock molar concentration) down to 10<sup>-9</sup>.
               As a consequence, each setting file needs to have an analyte concetration added at the time of the upload.</br>
               <img src="{% static 'main/images/setting_detail.png' %}" alt="Setting view" style="border:2px dotted gray"></br>
-              The m/z is set for all files when the setting is created since is identical for all files within the setting. After all files associated to one setting are uploaded and the
-              corresponding anlyte concentrations saved the standard curve can be generated.
+              The m/z is set for all files when the setting is created since is identical for all files within the setting. After all files that are associated to one setting are uploaded and the
+              corresponding anlyte concentrations are saved, the standard curve can be generated with a click of a button.
               <p align="justify" style="text-align:justify; color:#3399FF; font-size: 40px;">After the standard curve is generated, the test file can be uploaded and analyzed. After the analysis, a link to the comprehensive report will be available in the main project space.</br></p>
     	      <img src="{% static 'main/images/setting_file_detail.png' %}" alt="Setting view" width="1000" style="border:2px dotted gray" >
     	      </p>
